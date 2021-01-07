@@ -1,0 +1,45 @@
+{
+	"manifest_version": 2,
+	"name": "auto_examine",
+	"version": "1.0.0",
+	"description": "美团外卖商家后台，自动审核订单",
+	"icons": {
+		"16": "./img/icon.png",
+		"48": "./img/icon.png",
+		"128": "./img/icon.png"
+	},
+	"background": {
+		"scripts": []
+	},
+	"browser_action": {
+		"default_icon": "img/icon.png",
+		"default_title": "自动审核订单Chrome插件",
+		"default_popup": "popup.html"
+	},
+	"content_scripts": [
+		{
+			"matches": ["*://shangoue.meituan.com/*"],
+			"js": [
+                "node_modules/jquery/dist/jquery.js",
+                "autoExamine.js"
+            ],
+			"css": [],
+			"run_at": "document_end"
+		}
+	],
+	"permissions": [
+		"contextMenus",
+		"tabs",
+		"notifications",
+		"webRequest",
+		"webRequestBlocking",
+		"storage",
+		"http://*/*",
+		"https://*/*"
+	],
+	"homepage_url": "https://github.com/tengfei31/go-grpc",
+	"chrome_url_overrides": {
+		"newtab": "newtab.html"
+	},
+	"default_locale": "zh_CN"
+}
