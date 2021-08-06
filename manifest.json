@@ -21,6 +21,7 @@
 			"matches": ["*://shangoue.meituan.com/*"],
 			"js": [
                 "node_modules/jquery/dist/jquery.js",
+                "node_modules/vue/dist/vue.js",
                 "autoExamine.js"
             ],
 			"css": [],
@@ -37,7 +38,7 @@
 		"http://*/*",
 		"https://*/*"
 	],
-	"homepage_url": "https://github.com/tengfei31/go-grpc",
+	"homepage_url": "https://github.com/tengfei31/meituan_auto_examine",
 	"chrome_url_overrides": {
 		"newtab": "newtab.html"
 	},

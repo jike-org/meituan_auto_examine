@@ -4,6 +4,7 @@
  * author: wangtengfei
  * 美团外卖商家后台，自动审核订单脚本
  */
+
 //从cookie中获取指定值
 function getCookie(key) {
     return document.cookie.length > 0 && (c_start = document.cookie.indexOf(key + "="),
@@ -117,5 +118,54 @@ request.timerId = window.setInterval(function() {
     request.query();
 }, 5 * 1000);
 request.writeLog("", "定时器id:" + request.timerId);
+
+
+
+// 测试，方便修改为vue的方式
+const vue = new Vue({
+    data () {
+        return {
+            timer_id: 0,
+            time_interval: 5 * 1000 // 5s
+        }
+    },
+    created () {
+        this.run()
+    },
+    methods: {
+        run () {
+            // 注册一个定时器
+            setInterval(() => {
+                this.log()
+            }, this.time_interval)
+        },
+        // 格式化日志
+        log (orderId, msg) {
+            var orderInfo = new String();
+            if (orderId) {
+                orderInfo = "订单id：" + orderId;
+            }
+            console.log('自动审单', this.format(), orderInfo + msg)
+        },
+        // 格式化时间
+        format () {
+            // timestamp是整数，否则要parseInt转换
+            const time = new Date()
+            const y = time.getFullYear()
+            const m = time.getMonth() + 1
+            const d = time.getDate()
+            const h = time.getHours()
+            const mm = time.getMinutes()
+            const s = time.getSeconds()
+            return y + '-' + this.add0(m) + '-' + this.add0(d) + ' ' + this.add0(h) + ':' + this.add0(mm) + ':' + this.add0(s)
+        },
+        // 前面加0
+        add0 (m) {
+            return m < 10 ? '0' + m : m
+        }
+    }
+})
+
+
 
 
