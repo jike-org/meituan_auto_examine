@@ -22,6 +22,7 @@
 			"js": [
                 "node_modules/jquery/dist/jquery.js",
                 "node_modules/vue/dist/vue.js",
+				"node_modules/vue-cookies/vue-cookies.js",
                 "autoExamine.js"
             ],
 			"css": [],
