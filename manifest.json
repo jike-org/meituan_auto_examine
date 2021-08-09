@@ -22,6 +22,8 @@
 			"js": [
                 "node_modules/jquery/dist/jquery.js",
                 "node_modules/vue/dist/vue.js",
+				"node_modules/axios/index.d.ts",
+				"node_modules/vue-axios/index.d.ts",
                 "autoExamine.js"
             ],
 			"css": [],
