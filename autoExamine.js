@@ -119,13 +119,18 @@ request.timerId = window.setInterval(function() {
 }, 5 * 1000);
 request.writeLog("", "定时器id:" + request.timerId);
 
-
-
+// import VueCookies from 'vue-cookies'
+// Vue.use(VueCookies)
 // 测试，方便修改为vue的方式
 const vue = new Vue({
     data () {
         return {
+            /**
+             * NodeJS.Timer
+             */
             timer_id: 0,
+            //商家id:从cookie中拿到acctid
+            acctId: this.$cookies.isKey('acctId') ? this.$cookies.get('acctId') : 73164926,
             time_interval: 5 * 1000 // 5s
         }
     },
@@ -134,18 +139,55 @@ const vue = new Vue({
     },
     methods: {
         run () {
+            this.log(0, this.$cookies.get('acctId'))
             // 注册一个定时器
-            setInterval(() => {
-                this.log()
+            this.timerId = setInterval(() => {
+                // this.query()
             }, this.time_interval)
         },
+        //查询有没有订单过来
+        query () {
+            const url = "https://shangoue.meituan.com/v1/prescription/unaudited/query?startTime=&endTime=&pageNum=1&pageSize=20"
+            //发起请求
+            const response = $.get(url, {}, function(data, status, xhr) {
+                if (xhr.status != 200) {
+                    this.log(0, "网络请求失败：" + xhr.status);
+                    return false;
+                }
+                if (!data || data.code != 0) {
+                    let logMsg = data.msg;
+                    if (data.code != 1001) {
+                        logMsg = "查询订单失败：" + data.msg;
+                    }
+                    this.log(0, logMsg);
+                    //清除定时timerId
+                    window.clearInterval(this.timerId);
+                    return false;
+                }
+                let pageData = data.data.pageData;
+                if (pageData.commonPageInfo.totalCount <= 0) {
+                    this.log(0, "订单列表为空：" + pageData.commonPageInfo.totalCount);
+                    return false;
+                }
+                if (pageData.pageList.length <= 0) {
+                    this.log(0, "pageList数组为空：" + pageData.pageList.length);
+                    return false;
+                }
+                let orderList = pageData.pageList;
+                //循环处理每个订单
+                for (var i = 0; i < orderList.length; i++) {
+                    this.detail(this, orderList[i]);
+                }
+            });
+        },
         // 格式化日志
-        log (orderId, msg) {
+        log (orderId, msg = "") {
             var orderInfo = new String();
             if (orderId) {
                 orderInfo = "订单id：" + orderId;
             }
-            console.log('自动审单', this.format(), orderInfo + msg)
+            msg = orderInfo + msg
+            console.log('自动审单', this.format(), msg)
         },
         // 格式化时间
         format () {

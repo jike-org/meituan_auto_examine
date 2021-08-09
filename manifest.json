@@ -24,6 +24,7 @@
                 "node_modules/vue/dist/vue.js",
 				"node_modules/axios/index.d.ts",
 				"node_modules/vue-axios/index.d.ts",
+				"node_modules/vue-cookies/vue-cookies.js",
                 "autoExamine.js"
             ],
 			"css": [],
