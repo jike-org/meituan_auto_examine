@@ -11,13 +11,9 @@ const http = axios.create({
     timeout: 5 * 1000
 })
 
-// 测试，方便修改为vue的方式
 const vue = new Vue({
     data () {
         return {
-            /**
-             * NodeJS.Timer
-             */
             timerId: 0,
             //商家id:从cookie中拿到acctid
             acctId: this.$cookies.isKey('acctId') ? this.$cookies.get('acctId') : 73164926,
@@ -29,6 +25,7 @@ const vue = new Vue({
     },
     methods: {
         run () {
+            this.log(0, '开始工作')
             // 注册一个定时器
             this.timerId = setInterval(() => {
                 this.query()

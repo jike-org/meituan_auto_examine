@@ -40,8 +40,5 @@
 		"https://*/*"
 	],
 	"homepage_url": "https://github.com/tengfei31/meituan_auto_examine",
-	"chrome_url_overrides": {
-		"newtab": "newtab.html"
-	},
 	"default_locale": "zh_CN"
 }
