@@ -30,6 +30,10 @@ const vue = new Vue({
             this.timerId = setInterval(() => {
                 this.query()
             }, this.time_interval)
+            // 1小时刷新一次这个页面
+            setInterval(() => {
+                window.location.reload()
+            }, 60 * 60 * 1000)
         },
         //查询有没有订单过来
         query () {
