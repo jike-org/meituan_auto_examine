@@ -54,12 +54,13 @@ const vue = new Vue({
                 }
                 const pageData = data.data.pageData
                 if (pageData.commonPageInfo.totalCount <= 0) {
-                    throw new Error(`订单列表为空：${pageData.commonPageInfo.totalCount}`);
+                    throw new Error(`订单列表为空：${pageData.commonPageInfo.totalCount}`)
                 }
                 if (pageData.pageList.length <= 0) {
-                    throw new Error(`pageList数组为空：${pageData.pageList.length}`);
+                    throw new Error(`pageList数组为空：${pageData.pageList.length}`)
                 }
-                const orderList = pageData.pageList;
+                const orderList = pageData.pageList
+                this.log(0, `本次需审核订单${orderList.length}条`)
                 //循环处理每个订单
                 for (let i = 0; i < orderList.length; i++) {
                     this.detail(orderList[i]);
