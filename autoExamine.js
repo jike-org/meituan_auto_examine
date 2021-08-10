@@ -49,7 +49,7 @@ const vue = new Vue({
                         logMsg = "查询订单失败：" + data.msg
                     }
                     //清除定时timerId
-                    window.clearInterval(this.timerId);
+                    window.clearInterval(this.timerId)
                     throw new Error(logMsg)
                 }
                 const pageData = data.data.pageData
@@ -63,7 +63,7 @@ const vue = new Vue({
                 this.log(0, `本次需审核订单${orderList.length}条`)
                 //循环处理每个订单
                 for (let i = 0; i < orderList.length; i++) {
-                    this.detail(orderList[i]);
+                    this.detail(orderList[i])
                 }
             }).catch(error => {
                 this.log(0, error.message)
@@ -93,7 +93,7 @@ const vue = new Vue({
                     return false
                 }
                 //审核订单
-                this.commit(order.poiId, order.auditViewId, order.auditStatus, data.data.auditReason, undefined);
+                this.commit(order.poiId, order.auditViewId, order.auditStatus, data.data.auditReason, undefined)
             }).catch(error => {
                 this.log(0, error.message)
             })
