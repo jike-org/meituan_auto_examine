@@ -18,7 +18,9 @@
 	},
 	"content_scripts": [
 		{
-			"matches": ["*://shangoue.meituan.com/*"],
+			"matches": [
+				"*://*.meituan.com/*"
+			],
 			"js": [
                 "node_modules/vue/dist/vue.js",
 				"node_modules/axios/dist/axios.js",

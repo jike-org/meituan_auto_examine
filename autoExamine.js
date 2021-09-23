@@ -7,7 +7,7 @@
  */
 
 const http = axios.create({
-    baseURL: 'https://shangoue.meituan.com/v1/prescription',
+    baseURL: `${window.location.origin}/v1/prescription`,
     timeout: 5 * 1000
 })
 
@@ -16,7 +16,7 @@ const vue = new Vue({
         return {
             timerId: 0,
             //商家id:从cookie中拿到acctid
-            acctId: this.$cookies.isKey('acctId') ? this.$cookies.get('acctId') : 73164926,
+            acctId: this.$cookies.isKey('acctId') ? this.$cookies.get('acctId') : undefined,
             time_interval: 5 * 1000 // 5s
         }
     },
@@ -26,6 +26,11 @@ const vue = new Vue({
     methods: {
         run () {
             this.log(0, '开始工作')
+
+            if (!this.acctId) {
+                this.log(0, 'acctId取值失败，请检查！')
+                return
+            }
             // 注册一个定时器
             this.timerId = setInterval(() => {
                 this.query()
@@ -79,6 +84,7 @@ const vue = new Vue({
                     wmPoiId: order.poiId
                 }
             }).then(response => {
+                this.log(0, `查询订单详情,${JSON.stringify(response.config.params)}`)
                 if (response.status !== 200) {
                     this.log(order.auditViewId, `查询订单详情,网络请求失败：${response.status}`)
                     return false
@@ -123,13 +129,12 @@ const vue = new Vue({
             })
         },
         // 格式化日志
-        log (orderId, msg = "") {
+        log (orderId, msg) {
             let orderInfo = ""
             if (orderId) {
                 orderInfo = "订单id：" + orderId
             }
-            msg = orderInfo + msg
-            console.log('自动审单', this.format(), msg)
+            console.log('自动审单', this.format(), orderInfo, msg)
         },
         // 格式化时间
         format () {
